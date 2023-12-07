@@ -13,7 +13,7 @@
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js"
   },
-  "author": "Szymon Rachuba",
+  "author": "Szymon Rachuba, Alicja Piotrowicz",
   "license": "MIT",
   "devDependencies": {
     "nodemon": "^3.0.2"
