@@ -1,9 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const {getItems, setItems, updateItems, deleteItems} = require('../controllers/itemController')
+const {
+    getItems,
+    setItems,
+    updateItems,
+    deleteItems,
+} = require('../Controllers/ItemController')
 
 router.route('/').get(getItems).post(setItems)
-
-router.route('/:id').put(updateItems).delete(deleteItems)
+router.route('/:id').delete(deleteItems).put(updateItems)
 
 module.exports = router
+
