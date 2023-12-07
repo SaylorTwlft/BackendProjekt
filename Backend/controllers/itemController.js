@@ -1,10 +1,14 @@
 const asyncHandler = require('express-async-handler')
 
+const Item = require('../models/ItemModel')
+
 // @desc    Get Items
 // @route   GET /api/items
 // @access  Private
 const getItems = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: 'Get item' })
+    const items = await Item.find()
+
+    res.status(200).json(items)
 })
 
 // @desc    Set Items
@@ -16,7 +20,11 @@ const setItems = asyncHandler(async (req, res) => {
         throw new Error('No text field in request body!')
     }
 
-    res.status(200).json({ message: 'Set items' })
+    const item = await Item.create({
+        text: req.body.text
+    })
+
+    res.status(200).json(item)
 })
 
 // @desc    Update Items
