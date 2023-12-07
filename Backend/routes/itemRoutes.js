@@ -1,20 +1,14 @@
 const express = require('express')
 const router = express.Router()
+const {
+    getItems,
+    setItems,
+    updateItems,
+    deleteItems,
+} = require('../Controllers/ItemController')
 
-
-router.post('/', (req, res) => {
-    res.status(200).json({message: 'Set items'})
-})
-
-router.get('/', (req, res) => {
-    res.status(200).json({message: 'Get items'})
-})
-router.put('/:id', (req, res) => {
-    res.status(200).json({message: `Update item ${req.params.id}`})
-})
-
-router.delete('/:id', (req, res) => {
-    res.status(200).json({message: `Delete item ${req.params.id}`})
-})
+router.route('/').get(getItems).post(setItems)
+router.route('/:id').delete(deleteItems).put(updateItems)
 
 module.exports = router
+
