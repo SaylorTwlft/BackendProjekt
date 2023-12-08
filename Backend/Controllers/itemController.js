@@ -31,14 +31,32 @@ const setItems = asyncHandler(async (req, res) => {
 // @route   PUT /api/items/:id
 // @access  Private
 const updateItems = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: `Update item ${req.params.id}` })
+    const item = await Item.findById(req.params.id)
+
+    if (!item) {
+        res.status(400)
+        throw new Error('Item not found!')
+    }
+
+    const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true })
+
+    res.status(200).json(updatedItem)
 })
 
 // @desc    Delete Items
 // @route   DELETE /api/items/:id
 // @access  Private
 const deleteItems = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: `Delete item ${req.params.id}` })
+    const item = await Item.findById(req.params.id)
+
+    if (!item) {
+        res.status(400)
+        throw new Error('Item not found!')
+    }
+
+    await item.deleteOne()
+
+    res.status(200).json({ id: req.params.id })
 })
 
 module.exports = {
