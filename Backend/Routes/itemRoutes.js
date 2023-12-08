@@ -7,8 +7,10 @@ const {
     deleteItems,
 } = require('../controllers/ItemController')
 
-router.route('/').get(getItems).post(setItems)
-router.route('/:id').delete(deleteItems).put(updateItems)
+const { protect } = require('../Middleware/AuthMiddleware')
+
+router.route('/').get(protect, getItems).post(protect, setItems)
+router.route('/:id').delete(protect, deleteItems).put(protect, updateItems)
 
 module.exports = router
 
