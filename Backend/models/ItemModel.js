@@ -8,7 +8,7 @@ const itemSchema = mongoose.Schema({
     },
     text: {
         type: String,
-        required: [true, 'Empty text value!']
+        required: [true, 'Pusta nazwa prezentu!']
     }
 }, {
     timestamps: true

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
-const User = require('../Models/UserModel')
+const User = require('../models/UserModel')
 
 // @desc    Register new user
 // @route   POST /api/users
@@ -11,14 +11,14 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if (!name || !email || !password) {
         res.status(400)
-        throw new Error('Missing fileds!')
+        throw new Error('Puste pola!')
     }
 
     const userExits = await User.findOne({ email })
 
     if (userExits) {
         res.status(400)
-        throw new Error('User exists!')
+        throw new Error('Email w użyciu!')
     }
 
     // Password hashing
@@ -41,10 +41,10 @@ const registerUser = asyncHandler(async (req, res) => {
         })
     } else {
         res.status(400)
-        throw new Error('Invalid user data!');
+        throw new Error('Błędne dane!');
     }
 
-    res.json({ message: 'Registered user' })
+    res.json({ message: 'Zarejestrowano użytkownika' })
 })
 
 // @desc    Authenticate a user
@@ -63,7 +63,7 @@ const loginUser = asyncHandler(async (req, res) => {
         })
     } else {
         res.status(400)
-        throw new Error('Invalid credentials')
+        throw new Error('Błędne dane!')
     }
 
 
@@ -76,13 +76,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // @acces   Private
 const getUserData = asyncHandler(async (req, res) => {
 
-    const { _id, name, email } = await User.findById(req.user.id)
-
-    res.status(200).json({
-        id: _id,
-        name,
-        email,
-    })
+    res.status(200).json(req.user)
 })
 
 const generateToken = (id) => {
